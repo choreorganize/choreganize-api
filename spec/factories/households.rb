@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :household do
-    address { "MyString" }
-    housecode_digest { "MyString" }
+  factory :mock_household, class: household do
+    address { Faker::Address.street_address }
+    housecode_digest { Faker::Internet.password }
   end
 end
