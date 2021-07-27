@@ -1,3 +1,9 @@
 require:
   - rubocop-other-extension
   - rubocop-rails
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
