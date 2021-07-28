@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :assignment do
-    completed { false }
+    completed { [true, false].sample }
     roommate { nil }
     chore { nil }
   end

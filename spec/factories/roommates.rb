@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :roommate do
-    user_id { 1 }
+    user_id { nil }
     household { nil }
   end
 end
