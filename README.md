@@ -21,11 +21,9 @@ your local machine for development and testing purposes.
 3. Setup the database: `rails db:create`
 4. Run migrations: ` rails db:migrate`
 5. Install the Figaro gem: `bundle exec figaro install`
-6. Create an account with [MapQuest](https://developer.mapquest.com/documentation/geocoding-api/) and request an API key
 7. Create an account with [Open Weather Map](https://home.openweathermap.org/users/sign_up) and request an API key
 8. Add your API key to the `application.yml` created by Figaro:
   ```rb
-  mapquest_key: your_api_key
   openweather_key: your_api_key
   ```
 
