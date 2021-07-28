@@ -56,6 +56,7 @@ group :development, :test do
   gem 'rubocop-rails', require: false
   gem 'vcr'
   gem 'webmock'
+  gem 'pry'
 end
 
 group :development do
