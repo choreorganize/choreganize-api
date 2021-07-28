@@ -42,6 +42,12 @@ Testing
 * [webmock](https://github.com/bblimke/webmock)
 * [vcr](https://github.com/vcr/vcr)
 * [Bootstrap](https://github.com/twbs/bootstrap-rubygem)
+* [pry](https://github.com/pry/pry)
+* [factory-bot-rails](https://github.com/thoughtbot/factory_bot_rails)
+* [faker](https://github.com/faker-ruby/faker)
+* [launchy](https://github.com/copiousfreetime/launchy)
+* [json](https://github.com/flori/json)
+* [jsonapi-serializer](https://github.com/jsonapi-serializer/jsonapi-serializer)
 
 API Consumption
 * [faraday](https://github.com/lostisland/faraday)
