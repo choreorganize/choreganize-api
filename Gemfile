@@ -39,7 +39,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # gems for api consumption
 gem 'faraday'
 gem 'jsonapi-serializer'
-gem 'json' 
+gem 'json'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -57,6 +57,7 @@ group :development, :test do
   gem 'vcr'
   gem 'webmock'
   gem 'pry'
+  gem 'travis'
 end
 
 group :development do
