@@ -9,9 +9,8 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-##
 
-ActiveRecord::Schema.define(version: 2021_07_27_232432) do
+ActiveRecord::Schema.define(version: 2021_07_28_221001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +42,8 @@ ActiveRecord::Schema.define(version: 2021_07_27_232432) do
     t.string "housecode_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "city"
+    t.string "state"
   end
 
   create_table "roommates", force: :cascade do |t|
