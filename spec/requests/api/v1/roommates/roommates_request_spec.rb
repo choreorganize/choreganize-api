@@ -50,10 +50,41 @@ RSpec.describe "Roommate API" do
       expect(response.status).to eq(404)
     end
   end
-  context 'Users create' do
-    it 'happy path: can create a new user' do
+  context 'Roommate create' do
+    it 'happy path: can create a new roommate' do
+      post '/api/v1/roommates', params: {
+        roommate: {
+          name: 'Moe deGrasse Tyson',
+          email: 'cutthatgrass@ex.com',
+          google_id: '456',
+          token: '1234567890'
+        }
+      }
+      body = JSON.parse(response.body, symbolize_names: true)
 
+      expect(response).to be_successful
+      # expect(body[:data][:id]).to eq("#{user.id}")
+      expect(body[:data]).to have_key(:type)
+      expect(body[:data]).to have_key(:attributes)
+      expect(body[:data][:attributes][:name]).to eq('Moe deGrasse Tyson')
+      expect(body[:data][:attributes][:household_id]).to eq(nil)
+      expect(body[:data][:attributes][:email]).to eq('cutthatgrass@ex.com')
+      expect(body[:data][:attributes][:google_id]).to eq('456')
+      expect(body[:data][:attributes][:token]).to eq('1234567890')
     end
-    it 'sad path: cannot create user without all params'
+    it 'sad path: cannot create user without all params' do
+      post '/api/v1/roommates', params: {
+        roommate: {
+          name: 'Moe deGrasse Tyson',
+          google_id: '456',
+          token: '1234567890'
+        }
+      }
+      body = JSON.parse(response.body, symbolize_names: true)
+      # require 'pry'; binding.pry
+      # expect(response).to be_successful
+
+      expect(body[:email]).to eq(["can't be blank"])
+    end
   end
 end
