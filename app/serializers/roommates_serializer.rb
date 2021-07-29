@@ -1,4 +1,4 @@
 class RoommatesSerializer
   include JSONAPI::Serializer
-  attributes :name, :household_id, :email, :google_id, :token
+  attributes :household_id, :task_name, :description, :weight, :frequency, :outdoor
 end
