@@ -1,7 +1,8 @@
 class Api::V1::RoommatesController < ApplicationController
 
   def index
-    render json: User.all
+    roommates = Roommate.all
+    render json: RoommatesSerializer.new(roommates)
   end
 
   def show
