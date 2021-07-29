@@ -4,9 +4,12 @@ rbenv:
 addons:
   postgresql: 9.6
 script:
-@@ -9,5 +9,6 @@ script:
+- bundle exec rails db:{create,migrate} RAILS_ENV=test
+- bundle exec rspec
 deploy:
   provider: heroku
   api_key:
-  app: https://choreganizer-api.herokuapp.com/\
+  app: choreganizer
   run: rails db:migrate
+  on:
+    all_branches: true
