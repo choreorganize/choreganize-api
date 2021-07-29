@@ -83,4 +83,23 @@ RSpec.describe "Roommate API" do
       expect(body[:email]).to eq(["can't be blank"])
     end
   end
+  context 'Roommate update' do
+    it 'happy path: can update an existing roommate' do
+      id = create(:mock_roommate, household: @household).id
+      previous = Roommate.last.name 
+
+      patch "/api/v1/roommates/#{id}", params: { roommate: {
+            name: "updated",
+            household_id: @household.id
+          }
+      }
+
+      updated = Roommate.find_by(id: id)
+
+      expect(response).to be_successful
+      expect(updated.name).to_not eq(previous)
+      expect(updated.name).to eq("updated")
+      expect(updated.household_id).to eq(@household.id)
+    end
+  end
 end
