@@ -19,9 +19,9 @@ class Api::V1::RoommatesController < ApplicationController
   def create
     roommate = Roommate.new(roommate_params)
     if roommate.save
-      render json: RoommatesSerializer.new(roommate), status: :created
+      render json: RoommatesSerializer.new(roommate), status: 201
     else
-      render json: roommate.errors, status: :unprocessable_entity
+      render json: roommate.errors, status: 422
     end
     # roommate.save!<~~~~~needs the bang?
     # render json: RoommatesSerializer.new(roommate), status: :created
@@ -33,9 +33,16 @@ class Api::V1::RoommatesController < ApplicationController
     # ^^^^this doesn't work yet.
   end
 
-  private
+  def update
+    roommate = Roommate.find(params[:id])
 
-  def roommate_params
-    params.require(:roommate).permit(:name, :email, :google_id, :token)
+    if roommate.update(roommate_params)
+      render json: RoommatesSerializer.new(roommate), status: 204
+    end
   end
+
+  private
+    def roommate_params
+      params.require(:roommate).permit(:name, :email, :google_id, :token, :household_id)
+    end
 end
