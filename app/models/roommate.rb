@@ -1,5 +1,8 @@
 class Roommate < ApplicationRecord
-  validates :user_id, presence: true, numericality: true
+  validates :name, presence: true
+  validates :email, presence: true
+  validates :google_id, presence: true
+  validates :token, presence: true 
   
   belongs_to :household
   has_many :assignments
