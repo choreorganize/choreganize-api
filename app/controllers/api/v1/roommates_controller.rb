@@ -17,6 +17,25 @@ class Api::V1::RoommatesController < ApplicationController
   end
 
   def create
+    roommate = Roommate.new(roommate_params)
+    if roommate.save
+      render json: RoommatesSerializer.new(roommate), status: :created
+    else
+      render json: roommate.errors, status: :unprocessable_entity
+    end
+    # roommate.save!<~~~~~needs the bang?
+    # render json: RoommatesSerializer.new(roommate), status: :created
+    # rescue ActiveRecord::RecordNotSaved
+    #   render json: {
+    #     message: 'Could not save',
+    #     errors: ['Request reqires: name, email, google_id, and token']
+    #   }, status: :unprocessable_entity
+    # ^^^^this doesn't work yet.
+  end
 
+  private
+
+  def roommate_params
+    params.require(:roommate).permit(:name, :email, :google_id, :token)
   end
 end
