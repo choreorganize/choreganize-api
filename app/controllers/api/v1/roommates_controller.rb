@@ -13,7 +13,7 @@ class Api::V1::RoommatesController < ApplicationController
     render json: {
       message: 'Not Found',
       errors: ["Could not find user with id##{params[:id]}"]
-    }, status: :not_found
+    }, status: 404
   end
 
   def create
@@ -39,6 +39,13 @@ class Api::V1::RoommatesController < ApplicationController
     if roommate.update(roommate_params)
       render json: RoommatesSerializer.new(roommate), status: 204
     end
+
+  rescue ActiveRecord::RecordNotFound
+    render json: {
+      message: 'Not Found',
+      errors: ["Could not find roommate with id##{params[:id]}"]
+    }, status: 404
+
   end
 
   private
