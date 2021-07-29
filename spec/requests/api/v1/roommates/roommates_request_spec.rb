@@ -70,6 +70,7 @@ RSpec.describe "Roommate API" do
       expect(body[:data][:attributes][:google_id]).to eq('456')
       expect(body[:data][:attributes][:token]).to eq('1234567890')
     end
+    
     it 'sad path: cannot create user without all params' do
       post '/api/v1/roommates', params: {
         roommate: {
@@ -88,7 +89,8 @@ RSpec.describe "Roommate API" do
       id = create(:mock_roommate, household: @household).id
       previous = Roommate.last.name 
 
-      patch "/api/v1/roommates/#{id}", params: { roommate: {
+      patch "/api/v1/roommates/#{id}", params: { 
+        roommate: {
             name: "updated",
             household_id: @household.id
           }
@@ -104,7 +106,8 @@ RSpec.describe "Roommate API" do
 
     it 'sad path: cannot update roommate that cannot be found' do 
       id = 0
-      patch "/api/v1/roommates/#{id}", params: { roommate: {
+      patch "/api/v1/roommates/#{id}", params: { 
+        roommate: {
             name: "updated",
             household_id: @household.id
           }
