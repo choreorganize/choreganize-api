@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Roommate, type: :model do
   describe 'relationships' do
-    it { should belong_to(:household) }
+    it { should belong_to(:household).optional }
     it { should have_many(:assignments) }
     it { should have_many(:chores).through(:assignments) }
   end
