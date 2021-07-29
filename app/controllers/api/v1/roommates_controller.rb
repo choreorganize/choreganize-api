@@ -17,12 +17,12 @@ class Api::V1::RoommatesController < ApplicationController
   end
 
   def create
-    # require 'pry'; binding.pry
     roommate = Roommate.new(roommate_params)
 
     if roommate.save
-      render json: roommate, status: :created
+      render json: RoommatesSerializer.new(roommate), status: :created
     else
+      # require 'pry'; binding.pry
       render json: roommate.errors, status: :unprocessable_entity
     end
   end
