@@ -1,0 +1,12 @@
+language: ruby
+rbenv:
+- 2.7.2
+addons:
+  postgresql: 9.6
+script:
+@@ -9,5 +9,6 @@ script:
+deploy:
+  provider: heroku
+  api_key:
+  app: https://choreganizer-api.herokuapp.com/\
+  run: rails db:migrate
