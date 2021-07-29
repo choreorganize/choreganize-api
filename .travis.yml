@@ -1,4 +1,3 @@
-#blanklinetotest
 language: ruby
 rbenv:
 - 2.7.2
@@ -10,6 +9,7 @@ script:
 deploy:
   provider: heroku
   api_key:
+    secure: Xgs6vHdwEXZimDtvnLC6+t9mnZVHmQyR/rOQDfVUq9TRp9ILfSk/1WR/FrB3JnotUlPLQ0KjxBfmSvV0ZoZ6X8Vylh8vEcEZ3jW0PwG2qTli1Tmkv5/+hfa6e3VIPT8W9TBTbHpSNk8XG6jX/7BXxqXrjyrMCtdQwOQoUXWxIrYH2LQILutI2e2ZgNVfVQq1QaOBT7h94POdK03zeGu+Ue4F3/OM/GwFtQXJrJG8g7j9KOiZWqNuAA3Fz7QV/fEpbEXGK30jDeREX8q4Sz3chnwn4Ubd/Nneemy3cyGCfJZpljK3sz3wfQba5gt8Y48M5+Vww3XJUjl/BUrljwuxKwBcRkfjNzTKtrsscC7Yonn+3oZE2xbhrWMZx743M4cwFMHOnI5djr4qwe/OnoG9YT3f4c9E8bcDjSqnsE0XGY9qa8CsfwKC0+6RKqehGnzJVIwIxIFjz4VwCIDVWMfcu335tzcBheCFqDXqBZu9d2klrtBq7AVU2VYBxjAeZtvr5830XfPORrzGl4mHXsXMjLj77/DcmUyDSo13JY4uM4/W/lC/jzWhpI3q7em0IlNR4w3VqeNi7n+jEeOg3XvsQP6WPsNBg7s5mAXdpFfH3HgoalfWvp/IrGWzgqIMq8T+qHwsD9KfRO7TtJETZlkZYG2e/u/HeM73RIQQICs7lGY=
   app: choreganizer
   run: rails db:migrate
   on:
