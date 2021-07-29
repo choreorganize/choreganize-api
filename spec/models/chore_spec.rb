@@ -15,6 +15,6 @@ RSpec.describe Chore, type: :model do
     it { should validate_numericality_of(:weight) }
     it { should validate_presence_of(:frequency) }
     # it { should validate_numericality_of(:frequency) }
-    it { should define_enum_for(:frequency).with({weekly: 0, bimonthly: 1, monthly: 2}) }
+    it { should define_enum_for(:frequency).with({weekly: 1, bimonthly: 2, monthly: 3}) }
   end
 end

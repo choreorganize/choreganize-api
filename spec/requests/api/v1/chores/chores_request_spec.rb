@@ -30,7 +30,7 @@ RSpec.describe "Chore API" do
       expect(body[:data][:id]).to eq("#{chore.id}")
       expect(body[:data]).to have_key(:type)
       expect(body[:data]).to have_key(:attributes)
-      expect(body[:data][:attributes][:task_name]).to eq(chore.name)
+      expect(body[:data][:attributes][:task_name]).to eq(chore.task_name)
       expect(body[:data][:attributes][:household_id]).to eq(@household.id)
       expect(body[:data][:attributes][:outdoor]).to eq(chore.outdoor)
       expect(body[:data][:attributes][:description]).to eq(chore.description)
