@@ -7,7 +7,7 @@ require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
-
+require 'factory_bot'
 # Add additional requires below this line. Rails is not loaded until this point!
 VCR.configure do |c| 
   c.cassette_library_dir = "spec/fixtures/vcr_cassettes" 
@@ -41,6 +41,11 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 RSpec.configure do |config|
+  config.include FactoryBot::Syntax::Methods
+  FactoryBot.definition_file_paths = [File.expand_path('../factories', __FILE__)]
+  # FactoryBot.find_definitions 
+  config.use_transactional_fixtures = false
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 

@@ -14,6 +14,9 @@ RSpec.describe OpenWeatherService do
           expect(response[:lon]).to eq(coordinates[:lon])
           expect(response[:lat]).to_not eq(50)
           expect(response[:lon]).to_not eq(50)
+          expect(response).to have_key(:current)
+          expect(response).to have_key(:daily)
+          expect(response[:daily].size).to eq(8)
         end
       end
     end

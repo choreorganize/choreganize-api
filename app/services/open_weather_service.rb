@@ -1,7 +1,7 @@
 class OpenWeatherService
 
   def self.get_forecast_data(coordinates)
-    new.request_api("/data/2.5/onecall?lat=#{coordinates[:lat]}&lon=#{coordinates[:lon]}&exclude={part}")
+    new.request_api("/data/2.5/onecall?lat=#{coordinates[:lat]}&lon=#{coordinates[:lon]}&exclude=minutely,hourly,alerts")
   end
 
   def request_api(path)
