@@ -101,5 +101,20 @@ RSpec.describe "Roommate API" do
       expect(updated.name).to eq("updated")
       expect(updated.household_id).to eq(@household.id)
     end
+
+    it 'sad path: cannot update roommate that cannot be found' do 
+      id = 0
+      patch "/api/v1/roommates/#{id}", params: { roommate: {
+            name: "updated",
+            household_id: @household.id
+          }
+      }
+
+      body = JSON.parse(response.body, symbolize_names: true)
+
+      expect(body[:message]).to eq 'Not Found'
+      expect(body[:errors]).to include 'Could not find roommate with id#0'
+      expect(response.status).to eq(404)
+    end
   end
 end
