@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-
 RSpec.describe "Roommate API" do
   before(:all) do
     @household = create(:mock_household)
@@ -63,7 +62,6 @@ RSpec.describe "Roommate API" do
       body = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to be_successful
-      # expect(body[:data][:id]).to eq("#{user.id}")
       expect(body[:data]).to have_key(:type)
       expect(body[:data]).to have_key(:attributes)
       expect(body[:data][:attributes][:name]).to eq('Moe deGrasse Tyson')
@@ -81,8 +79,6 @@ RSpec.describe "Roommate API" do
         }
       }
       body = JSON.parse(response.body, symbolize_names: true)
-      # require 'pry'; binding.pry
-      # expect(response).to be_successful
 
       expect(body[:email]).to eq(["can't be blank"])
     end
