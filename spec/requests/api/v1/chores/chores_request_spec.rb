@@ -50,9 +50,29 @@ RSpec.describe "Chore API" do
       expect(response.status).to eq(404)
     end
   end
+  context 'Chore create' do
+    it 'happy path: can create a new chore' do
+      post '/api/v1/chores', params: {
+        chore: {
+          task_name: "Mow Lawn",
+          weight: 1,
+          frequency: :weekly,
+          household_id: @household.id
+        }
+      }
 
-  # context 'Chore create'
-    # it 'happy path: can create a new chore'
-    # it 'sad path: cannot create chore without all params'
+      body = JSON.parse(response.body, symbolize_names: true)
 
+      expect(response).to be_successful
+      expect(body[:data]).to have_key(:type)
+      expect(body[:data]).to have_key(:attributes)
+      expect(body[:data][:attributes][:name]).to eq('Moe deGrasse Tyson')
+      expect(body[:data][:attributes][:household_id]).to eq(nil)
+      expect(body[:data][:attributes][:email]).to eq('cutthatgrass@ex.com')
+      expect(body[:data][:attributes][:google_id]).to eq('456')
+      expect(body[:data][:attributes][:token]).to eq('1234567890')
+    end
+
+    it 'sad path: cannot create chore without all params'
+  end
 end
