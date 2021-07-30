@@ -11,6 +11,8 @@ RSpec.describe "Household Show page API" do
 
       get "/api/v1/household/#{@household.id}"
 
+      
+
 
       body = JSON.parse(response.body, symbolize_names: true)
 
