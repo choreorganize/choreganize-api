@@ -11,7 +11,14 @@ class Api::V1::HouseholdController < ApplicationController
   end
 
   def search
-
+    # 
+    # household = Household.find_by(address: params[:address], city: params[:city], state: params[:state])
+    # if household.nil?
+    #   error = "cannot find household with address '#{params[:address]+ params[:city] + params[:state]}'"
+    #   error_response(error)
+    # else
+    #   render json: HouseholdSerializer.new(household), status: 200
+    # end
     search = {}
     params[:search_terms].each do |pair|
       search[pair[0]] = pair[1]
@@ -27,6 +34,4 @@ class Api::V1::HouseholdController < ApplicationController
       render json: HouseholdSerializer.new(household), status: 200
     end
   end
-
-
 end

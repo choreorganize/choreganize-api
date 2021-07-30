@@ -10,10 +10,10 @@ RSpec.describe "Household Show page API" do
 
       get "/api/v1/household/#{@household.id}"
 
+
       body = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to be_successful
-      # binding.pry
 
       expect(body[:data]).to have_key(:id)
       expect(body[:data][:id]).to eq("#{@household.id}")

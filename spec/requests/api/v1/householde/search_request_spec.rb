@@ -50,10 +50,4 @@ RSpec.describe "Household search  API" do
     end
 
   end
-
-
-
-
-
-
 end
