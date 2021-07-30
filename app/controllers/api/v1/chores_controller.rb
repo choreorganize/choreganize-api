@@ -1,6 +1,6 @@
 class Api::V1::ChoresController < ApplicationController
-  skip_before_action :verify_authentication_token
-  
+  # skip_before_action :verify_authentication_token, only: [:create]
+
   def index
     chores = Chore.all
     render json: ChoresSerializer.new(chores)
