@@ -107,5 +107,20 @@ RSpec.describe "Chore API" do
       expect(updated.task_name).to_not eq(previous)
       expect(updated.task_name).to eq("updated")
     end
+
+    it 'sad path: cannot update chore that cannot be found' do 
+      id = 0
+      patch "/api/v1/chores/#{id}", params: {
+        chore: {
+          task_name: "updated"
+        }
+      }
+
+      body = JSON.parse(response.body, symbolize_names: true)
+
+      expect(body[:message]).to eq 'Not Found'
+      expect(body[:errors]).to include 'Could not find chore with id#0'
+      expect(response.status).to eq(404)
+    end
   end
 end
