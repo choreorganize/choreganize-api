@@ -36,6 +36,11 @@ class Api::V1::ChoresController < ApplicationController
       render json: ChoresSerializer.new(chore), status: 204
     end
 
+  rescue ActiveRecord::RecordNotFound
+    render json: {
+      message: 'Not Found',
+      errors: "Could not find chore with id##{params[:id]}"
+    }, status: 404
   end
 
   private
