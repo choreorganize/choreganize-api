@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :roommates, except: [:new, :edit, :destroy]
       resources :chores, except: [:new, :edit]
       resources :household, only: [:show]
+      get 'household/search', to: 'household#search'
     end
   end
 end
