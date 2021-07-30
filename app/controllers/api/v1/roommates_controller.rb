@@ -1,5 +1,6 @@
 class Api::V1::RoommatesController < ApplicationController
-
+  skip_before_action :verify_authentication_token
+  
   def index
     roommates = Roommate.all
     render json: RoommatesSerializer.new(roommates)
