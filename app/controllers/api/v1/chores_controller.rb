@@ -29,7 +29,12 @@ class Api::V1::ChoresController < ApplicationController
     end
   end
 
-  def edit
+  def update
+    chore = Chore.find(params[:id])
+
+    if chore.update!(chore_params)
+      render json: ChoresSerializer.new(chore), status: 204
+    end
 
   end
 
