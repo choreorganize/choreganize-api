@@ -91,4 +91,21 @@ RSpec.describe "Chore API" do
       expect(body[:message]).to eq("Invalid")
     end
   end
+  context 'Chore update' do
+    it 'happy path: can update an existing chore' do
+      id = create(:mock_chore, household: @household).id
+      previous = Chore.last.task_name
+      patch "/api/v1/chores/#{id}", params: {
+        chore: {
+          task_name: "updated"
+        }
+      }
+
+      updated = Chore.find_by(id: id)
+
+      expect(response).to be_successful
+      expect(updated.task_name).to_not eq(previous)
+      expect(updated.task_name).to eq("updated")
+    end
+  end
 end
