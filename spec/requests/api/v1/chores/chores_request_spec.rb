@@ -57,22 +57,38 @@ RSpec.describe "Chore API" do
           task_name: "Mow Lawn",
           weight: 1,
           frequency: :weekly,
-          household_id: @household.id
+          household_id: @household.id,
+          description: "Cut some grass, my friend.",
+          outdoor: true 
         }
       }
 
       body = JSON.parse(response.body, symbolize_names: true)
-
+      
       expect(response).to be_successful
       expect(body[:data]).to have_key(:type)
       expect(body[:data]).to have_key(:attributes)
-      expect(body[:data][:attributes][:name]).to eq('Moe deGrasse Tyson')
-      expect(body[:data][:attributes][:household_id]).to eq(nil)
-      expect(body[:data][:attributes][:email]).to eq('cutthatgrass@ex.com')
-      expect(body[:data][:attributes][:google_id]).to eq('456')
-      expect(body[:data][:attributes][:token]).to eq('1234567890')
+      expect(body[:data][:attributes][:task_name]).to eq('Mow Lawn')
+      expect(body[:data][:attributes][:household_id]).to eq(@household.id)
+      expect(body[:data][:attributes][:description]).to eq('Cut some grass, my friend.')
+      expect(body[:data][:attributes][:frequency]).to eq("weekly")
+      expect(body[:data][:attributes][:outdoor]).to eq(true)
     end
 
-    it 'sad path: cannot create chore without all params'
+    it 'sad path: cannot create chore without all params' do
+      post '/api/v1/chores', params: {
+        chore: {
+          weight: 1,
+          frequency: :weekly,
+          household_id: @household.id,
+          description: "Cut some grass, my friend.",
+          outdoor: true 
+        }
+      }
+
+      body = JSON.parse(response.body, symbolize_names: true)
+      
+      expect(body[:message]).to eq("Invalid")
+    end
   end
 end
