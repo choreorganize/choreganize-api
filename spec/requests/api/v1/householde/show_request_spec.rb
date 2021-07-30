@@ -32,12 +32,9 @@ RSpec.describe "Household Show page API" do
       expect(body[:data][:attributes]).to_not have_key(:housecode_digest)
       expect(body[:data][:attributes][:housecode_digest]).to_not eq(@household.housecode_digest)
       expect(body[:data][:attributes][:housecode_digest]).to eq(nil)
-
-
-
     end
 
-    it ' sends info on household' do
+    it ' can send info on roommates and ' do
 
       get "/api/v1/household/#{@household.id}"
 
@@ -50,12 +47,28 @@ RSpec.describe "Household Show page API" do
       expect(body[:data]).to have_key(:type)
       expect(body[:data][:type]).to eq('households')
 
-      expect(body[:data]).to have_key(:chores)
-      expect(body[:data][:chores].class).to eq(Array)
+      expect(body[:data][:attributes]).to have_key(:chores)
+      expect(body[:data][:attributes][:chores].class).to eq(Array)
 
-      expect(body[:data][:roommates]).to have_key(:roommates)
-      expect(body[:data][:roommates].class).to eq(Array)
+      expect(body[:data][:attributes]).to have_key(:roommates)
+      expect(body[:data][:attributes][:roommates].class).to eq(Array)
     end
   end
+
+  context 'sad paths' do
+    it ' responds appropriatly when the household does not exist' do
+
+      get "/api/v1/household/#{@household.id+100}"
+      body = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response.status).to eq(404)
+
+      expect(body[:data]).to have_key(:message)
+      expect(body[:data][:message]).to eq("your query could not be completed")
+      expect(body[:data]).to have_key(:errors)
+      expect(body[:data][:errors]).to eq("cannot find household with id #{@household.id+100}")
+    end
+  end
+
 
 end
