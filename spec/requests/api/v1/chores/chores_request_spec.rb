@@ -50,9 +50,77 @@ RSpec.describe "Chore API" do
       expect(response.status).to eq(404)
     end
   end
+  context 'Chore create' do
+    it 'happy path: can create a new chore' do
+      post '/api/v1/chores', params: {
+        chore: {
+          task_name: "Mow Lawn",
+          weight: 1,
+          frequency: :weekly,
+          household_id: @household.id,
+          description: "Cut some grass, my friend.",
+          outdoor: true 
+        }
+      }
 
-  # context 'Chore create'
-    # it 'happy path: can create a new chore'
-    # it 'sad path: cannot create chore without all params'
+      body = JSON.parse(response.body, symbolize_names: true)
+      
+      expect(response).to be_successful
+      expect(body[:data]).to have_key(:type)
+      expect(body[:data]).to have_key(:attributes)
+      expect(body[:data][:attributes][:task_name]).to eq('Mow Lawn')
+      expect(body[:data][:attributes][:household_id]).to eq(@household.id)
+      expect(body[:data][:attributes][:description]).to eq('Cut some grass, my friend.')
+      expect(body[:data][:attributes][:frequency]).to eq("weekly")
+      expect(body[:data][:attributes][:outdoor]).to eq(true)
+    end
 
+    it 'sad path: cannot create chore without all params' do
+      post '/api/v1/chores', params: {
+        chore: {
+          weight: 1,
+          frequency: :weekly,
+          household_id: @household.id,
+          description: "Cut some grass, my friend.",
+          outdoor: true 
+        }
+      }
+
+      body = JSON.parse(response.body, symbolize_names: true)
+      
+      expect(body[:message]).to eq("Invalid")
+    end
+  end
+  context 'Chore update' do
+    it 'happy path: can update an existing chore' do
+      id = create(:mock_chore, household: @household).id
+      previous = Chore.last.task_name
+      patch "/api/v1/chores/#{id}", params: {
+        chore: {
+          task_name: "updated"
+        }
+      }
+
+      updated = Chore.find_by(id: id)
+
+      expect(response).to be_successful
+      expect(updated.task_name).to_not eq(previous)
+      expect(updated.task_name).to eq("updated")
+    end
+
+    it 'sad path: cannot update chore that cannot be found' do 
+      id = 0
+      patch "/api/v1/chores/#{id}", params: {
+        chore: {
+          task_name: "updated"
+        }
+      }
+
+      body = JSON.parse(response.body, symbolize_names: true)
+
+      expect(body[:message]).to eq 'Not Found'
+      expect(body[:errors]).to include 'Could not find chore with id#0'
+      expect(response.status).to eq(404)
+    end
+  end
 end
