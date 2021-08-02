@@ -35,9 +35,17 @@ RSpec.describe Roommate, type: :model do
 
     describe '#completed_chores' do
       it 'returns lists of all completed chores' do 
+        
         expect(@user.completed_chores).to eq([@chore_1])
         expect(@user.completed_chores).to_not eq([@chore_3])
       end
     end
+
+    # describe '#weather_forecast' do
+    #   it 'returns weather forecast' do
+
+    #     expect(@user.weather_forecast).to eq(0)
+    #   end
+    # end
   end
 end
