@@ -11,7 +11,6 @@ RSpec.describe "Roommate API" do
       create_list(:mock_roommate, 3, household: @household)
       get '/api/v1/roommates'
 
-
       body = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to be_successful
@@ -23,10 +22,16 @@ RSpec.describe "Roommate API" do
     it 'happy path: can find a single roommate by user id' do
       create_list(:mock_roommate, 3, household: @household)
       user = Roommate.first
+      chore_1 = create(:mock_chore, household: @household)
+      chore_2 = create(:mock_chore, household: @household)
+      chore_3 = create(:mock_chore, household: @household)
+      assignment = create(:mock_assignment, roommate: user, chore: chore_1, completed: true)
+      assignment_2 = create(:mock_assignment, roommate: user, chore: chore_2, completed: false)
+
       get "/api/v1/roommates/#{user.id}"
 
       body = JSON.parse(response.body, symbolize_names: true)
-
+      require 'pry'; binding.pry
       expect(body[:data][:id]).to eq("#{user.id}")
       expect(body[:data]).to have_key(:type)
       expect(body[:data]).to have_key(:attributes)
