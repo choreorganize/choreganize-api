@@ -33,7 +33,7 @@ RSpec.describe Roommate, type: :model do
       end
     end
 
-    describe '#complete_chores' do
+    describe '#completed_chores' do
       it 'returns lists of all completed chores' do 
         expect(@user.completed_chores).to eq([@chore_1])
         expect(@user.completed_chores).to_not eq([@chore_3])

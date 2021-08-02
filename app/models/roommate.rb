@@ -12,4 +12,9 @@ class Roommate < ApplicationRecord
     chores.joins(:assignments)
     .where('assignments.completed = false')
   end
+
+  def completed_chores
+    chores.joins(:assignments)
+    .where('assignments.completed = true')
+  end
 end
