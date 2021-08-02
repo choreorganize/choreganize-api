@@ -5,8 +5,4 @@ RSpec.describe Assignment, type: :model do
     it { should belong_to(:chore) }
     it { should belong_to(:roommate) }
   end
-
-  describe 'validations' do
-    it { should validate_presence_of(:completed) }
-  end
 end

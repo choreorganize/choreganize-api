@@ -13,4 +13,39 @@ RSpec.describe Roommate, type: :model do
     it { should validate_presence_of(:google_id) }
     it { should validate_presence_of(:token) }
   end
+
+  describe 'instance method' do
+    before(:each) do 
+      household = create(:mock_household)
+      @user = create(:mock_roommate, household: household)
+      @chore_1 = create(:mock_chore, household: household)
+      @chore_2 = create(:mock_chore, household: household)
+      @chore_3 = create(:mock_chore, household: household)
+      assignment = create(:mock_assignment, roommate: @user, chore: @chore_1, completed: true)
+      assignment_2 = create(:mock_assignment, roommate: @user, chore: @chore_2, completed: false)
+    end
+
+    describe '#incomplete_chores' do
+      it 'returns list of all incomplete chores' do 
+
+        expect(@user.incomplete_chores).to eq([@chore_2])
+        expect(@user.completed_chores).to_not eq([@chore_3])
+      end
+    end
+
+    describe '#completed_chores' do
+      it 'returns lists of all completed chores' do 
+        
+        expect(@user.completed_chores).to eq([@chore_1])
+        expect(@user.completed_chores).to_not eq([@chore_3])
+      end
+    end
+
+    # describe '#weather_forecast' do
+    #   it 'returns weather forecast' do
+
+    #     expect(@user.weather_forecast).to eq(0)
+    #   end
+    # end
+  end
 end

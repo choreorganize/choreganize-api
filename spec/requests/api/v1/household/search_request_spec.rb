@@ -17,9 +17,9 @@ RSpec.describe "Household search  API" do
         }
 
       body = JSON.parse(response.body, symbolize_names: true)
-  
+
       expect(response).to be_successful
-    
+
       expect(body[:data]).to have_key(:id)
       expect(body[:data][:id]).to eq("#{@household.id}")
       expect(body[:data]).to have_key(:type)
@@ -30,9 +30,9 @@ RSpec.describe "Household search  API" do
       expect(body[:data][:attributes][:city]).to eq(@household.city)
       expect(body[:data][:attributes][:state]).to eq(@household.state)
 
-      expect(body[:data][:attributes]).to_not have_key(:housecode_digest)
-      expect(body[:data][:attributes][:housecode_digest]).to_not eq(@household.housecode_digest)
-      expect(body[:data][:attributes][:housecode_digest]).to eq(nil)
+      expect(body[:data][:attributes]).to_not have_key(:password_digest)
+      expect(body[:data][:attributes][:password_digest]).to_not eq(@household.password_digest)
+      expect(body[:data][:attributes][:password_digest]).to eq(nil)
     end
   end
 
