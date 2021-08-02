@@ -31,9 +31,7 @@ RSpec.describe "Household create  API" do
     it ' adds something to data base' do
 
       test = Household.find_by(address: '22b baker st')
-      # binding.
       expect(test).to eq(nil)
-
 
       post '/api/v1/household', params: {
         household: {
@@ -49,7 +47,257 @@ RSpec.describe "Household create  API" do
 
       expect(test_2.class).to eq(Household)
     end
-
   end
+
+  context 'sad paths' do
+    describe 'invalid city ' do
+      describe 'city left blank' do
+        it 'returns errors' do
+          post '/api/v1/household', params: {
+            household: {
+              address: '22b baker st',
+              state: 'key stone',
+              password: 'super secret',
+              password_confirmation: 'super secret'
+            }
+          }
+          body = JSON.parse(response.body, symbolize_names: true)
+
+          expect(response.status).to eq(400)
+
+          expect(body[:data]).to have_key(:message)
+          expect(body[:data]).to have_key(:errors)
+          expect(body[:data][:message]).to eq("your query could not be completed")
+          expect(body[:data][:errors]).to eq('cannot create household')
+        end
+        it 'does not add anything to the data base' do
+
+          test = Household.find_by(address: '22b baker st')
+          expect(test).to eq(nil)
+
+          post '/api/v1/household', params: {
+            household: {
+              address: '22b baker st',
+              state: 'key stone',
+              password: 'super secret',
+              password_confirmation: 'super secret'
+            }
+          }
+
+          test_2 = Household.find_by(address: '22b baker st')
+
+          expect(test_2.class).to eq(NilClass)
+        end
+      end
+    end
+    describe 'invalid state ' do
+      it 'returns errors' do
+        post '/api/v1/household', params: {
+          household: {
+            city: 'metropolis',
+            address: '22b baker st',
+            password: 'super secret',
+            password_confirmation: 'super secret'
+          }
+        }
+        body = JSON.parse(response.body, symbolize_names: true)
+
+        expect(response.status).to eq(400)
+
+        expect(body[:data]).to have_key(:message)
+        expect(body[:data]).to have_key(:errors)
+        expect(body[:data][:message]).to eq("your query could not be completed")
+        expect(body[:data][:errors]).to eq('cannot create household')
+      end
+      it 'does not add anything to the data base' do
+
+        test = Household.find_by(address: '22b baker st')
+        expect(test).to eq(nil)
+
+        post '/api/v1/household', params: {
+          household: {
+            address: '22b baker st',
+            city: 'metropolis',
+            password: 'super secret',
+            password_confirmation: 'super secret'
+          }
+        }
+
+        test_2 = Household.find_by(address: '22b baker st')
+
+        expect(test_2.class).to eq(NilClass)
+      end
+    end
+    describe 'invalid address  ' do
+      it 'returns errors' do
+        post '/api/v1/household', params: {
+          household: {
+            city: 'metropolis',
+            state: 'key stone',
+            password: 'super secret',
+            password_confirmation: 'super secret'
+          }
+        }
+        body = JSON.parse(response.body, symbolize_names: true)
+
+        expect(response.status).to eq(400)
+
+        expect(body[:data]).to have_key(:message)
+        expect(body[:data]).to have_key(:errors)
+        expect(body[:data][:message]).to eq("your query could not be completed")
+        expect(body[:data][:errors]).to eq('cannot create household')
+      end
+      it 'does not add anything to the data base' do
+
+        test = Household.find_by(address: '22b baker st')
+        expect(test).to eq(nil)
+
+        post '/api/v1/household', params: {
+          household: {
+            city: 'metropolis',
+            state: 'key stone',
+            password: 'super secret',
+            password_confirmation: 'super secret'
+          }
+        }
+
+        test_2 = Household.find_by(address: '22b baker st')
+
+        expect(test_2.class).to eq(NilClass)
+      end
+    end
+
+    describe 'invalid password ' do
+      describe 'missing password' do
+        it 'returns errors' do
+          post '/api/v1/household', params: {
+            household: {
+              address: '22b baker st',
+              city: 'metropolis',
+              state: 'key stone',
+              password_confirmation: 'super secret'
+            }
+          }
+          body = JSON.parse(response.body, symbolize_names: true)
+
+          expect(response.status).to eq(400)
+
+          expect(body[:data]).to have_key(:message)
+          expect(body[:data]).to have_key(:errors)
+          expect(body[:data][:message]).to eq("your query could not be completed")
+          expect(body[:data][:errors]).to eq('cannot create household')
+        end
+        it 'does not add anything to the data base' do
+
+          test = Household.find_by(address: '22b baker st')
+          expect(test).to eq(nil)
+
+          post '/api/v1/household', params: {
+            household: {
+              address: '22b baker st',
+              city: 'metropolis',
+              state: 'key stone',
+              password_confirmation: 'super secret'
+            }
+          }
+
+          test_2 = Household.find_by(address: '22b baker st')
+
+          expect(test_2.class).to eq(NilClass)
+        end
+
+      end
+
+      # describe 'missing password_confirmation' do
+      #   it 'returns errors' do
+      #     post '/api/v1/household', params: {
+      #       household: {
+      #         address: '22b baker st',
+      #         city: 'metropolis',
+      #         state: 'key stone',
+      #         password: 'super secret'
+      #       }
+      #     }
+      #     body = JSON.parse(response.body, symbolize_names: true)
+      #
+      #     expect(response.status).to eq(400)
+      #
+      #     expect(body[:data]).to have_key(:message)
+      #     expect(body[:data]).to have_key(:errors)
+      #     expect(body[:data][:message]).to eq("your query could not be completed")
+      #     expect(body[:data][:errors]).to eq('cannot create household')
+      #   end
+      #   it 'does not add anything to the data base' do
+      #
+      #     test = Household.find_by(address: '22b baker st')
+      #     expect(test).to eq(nil)
+      #
+      #     post '/api/v1/household', params: {
+      #       household: {
+      #         address: '22b baker st',
+      #         city: 'metropolis',
+      #         state: 'key stone',
+      #         password: 'super secret'
+      #       }
+      #     }
+      #
+      #     test_2 = Household.find_by(address: '22b baker st')
+      #
+      #     expect(test_2.class).to eq(NilClass)
+      #   end
+      #
+      #
+      # end
+
+      describe 'passwords dont match' do
+        it 'returns errors' do
+          post '/api/v1/household', params: {
+            household: {
+              address: '22b baker st',
+              city: 'metropolis',
+              state: 'key stone',
+              password: 'sooper secret',
+              password_confirmation: 'super secret'
+            }
+          }
+          body = JSON.parse(response.body, symbolize_names: true)
+
+          expect(response.status).to eq(400)
+
+          expect(body[:data]).to have_key(:message)
+          expect(body[:data]).to have_key(:errors)
+          expect(body[:data][:message]).to eq("your query could not be completed")
+          expect(body[:data][:errors]).to eq('cannot create household')
+        end
+        it 'does not add anything to the data base' do
+
+          test = Household.find_by(address: '22b baker st')
+          expect(test).to eq(nil)
+
+          post '/api/v1/household', params: {
+            household: {
+              address: '22b baker st',
+              city: 'metropolis',
+              state: 'key stone',
+              password: 'sooper secret',
+              password_confirmation: 'super secret'
+            }
+          }
+
+          test_2 = Household.find_by(address: '22b baker st')
+
+          expect(test_2.class).to eq(NilClass)
+        end
+
+
+      end
+
+
+
+
+
+    end
+  end
+
 
 end

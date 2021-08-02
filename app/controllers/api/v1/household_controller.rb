@@ -25,11 +25,13 @@ class Api::V1::HouseholdController < ApplicationController
   end
 
   def create
-  household = Household.create(household_params)
+  household = Household.new(household_params)
 
   if household.save
     render json: HouseholdSerializer.new(household), status: 201
   else
+    # test = household.errors
+    # binding.pry
     error_response("cannot create household", 400)
   end
 end
