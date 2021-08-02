@@ -1,4 +1,5 @@
 class Api::V1::HouseholdController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:create]
 
   def show
     household = Household.find_by(id: params[:id])
