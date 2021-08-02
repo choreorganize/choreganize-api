@@ -11,7 +11,7 @@ RSpec.describe "Household Show page API" do
       get "/api/v1/household/#{@household.id}"
 
       body = JSON.parse(response.body, symbolize_names: true)
-      
+
       expect(response).to be_successful
 
       expect(body[:data]).to have_key(:id)
@@ -24,9 +24,9 @@ RSpec.describe "Household Show page API" do
       expect(body[:data][:attributes][:city]).to eq(@household.city)
       expect(body[:data][:attributes][:state]).to eq(@household.state)
 
-      expect(body[:data][:attributes]).to_not have_key(:housecode_digest)
-      expect(body[:data][:attributes][:housecode_digest]).to_not eq(@household.housecode_digest)
-      expect(body[:data][:attributes][:housecode_digest]).to eq(nil)
+      expect(body[:data][:attributes]).to_not have_key(:password_digest)
+      expect(body[:data][:attributes][:password_digest]).to_not eq(@household.password_digest)
+      expect(body[:data][:attributes][:password_digest]).to eq(nil)
     end
 
     it ' can send info on roommates and ' do
