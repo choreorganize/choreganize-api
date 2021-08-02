@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :chores, except: [:new, :edit]
       get 'household/search', to: 'household#search'
       resources :household, only: [:show, :create]
+      
     end
   end
 end
