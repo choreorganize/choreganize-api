@@ -30,16 +30,43 @@ RSpec.describe "Roommate API" do
 
       get "/api/v1/roommates/#{user.id}"
 
-      body = JSON.parse(response.body, symbolize_names: true)
-      require 'pry'; binding.pry
-      expect(body[:data][:id]).to eq("#{user.id}")
-      expect(body[:data]).to have_key(:type)
-      expect(body[:data]).to have_key(:attributes)
-      expect(body[:data][:attributes][:name]).to eq(user.name)
-      expect(body[:data][:attributes][:household_id]).to eq(@household.id)
-      expect(body[:data][:attributes][:email]).to eq(user.email)
-      expect(body[:data][:attributes][:google_id]).to eq(user.google_id)
-      expect(body[:data][:attributes][:token]).to eq(user.token)
+      body = JSON.parse(response.body, symbolize_names: true)[:data]
+      # require 'pry'; binding.pry
+      expect(body[:id]).to eq("#{user.id}")
+      expect(body).to have_key(:type)
+      expect(body[:type]).to eq("google_user")
+      expect(body).to have_key(:attributes)
+      expect(body[:attributes][:name]).to eq(user.name)
+      expect(body[:attributes][:email]).to eq(user.email)
+      expect(body[:attributes][:google_id]).to eq(user.google_id)
+      expect(body[:attributes][:token]).to eq(user.token)
+
+      expect(body[:attributes][:household][:id]).to eq(@household.id)
+      expect(body[:attributes][:household][:address]).to eq(@household.address)
+      # needs to change to password_digest
+      expect(body[:attributes][:household][:housecode_digest]).to eq(@household.housecode_digest)
+      expect(body[:attributes][:household][:city]).to eq(@household.city)
+      expect(body[:attributes][:household][:state]).to eq(@household.state)
+      
+      expect(body[:attributes][:incomplete_chores]).to be_a(Array)
+      expect(body[:attributes][:incomplete_chores].count).to eq(1)
+      expect(body[:attributes][:incomplete_chores].first[:id]).to eq(chore_2.id)
+      expect(body[:attributes][:incomplete_chores].first[:household_id]).to eq(chore_2.household_id)
+      expect(body[:attributes][:incomplete_chores].first[:task_name]).to eq(chore_2.task_name)
+      expect(body[:attributes][:incomplete_chores].first[:description]).to eq(chore_2.description)
+      expect(body[:attributes][:incomplete_chores].first[:weight]).to eq(chore_2.weight)
+      expect(body[:attributes][:incomplete_chores].first[:frequency]).to eq(chore_2.frequency)
+      expect(body[:attributes][:incomplete_chores].first[:outdoor]).to eq(chore_2.outdoor)
+
+      expect(body[:attributes][:completed_chores]).to be_a(Array)
+      expect(body[:attributes][:completed_chores].count).to eq(1)      
+      expect(body[:attributes][:completed_chores].first[:id]).to eq(chore_1.id)
+      expect(body[:attributes][:completed_chores].first[:household_id]).to eq(chore_1.household_id)
+      expect(body[:attributes][:completed_chores].first[:task_name]).to eq(chore_1.task_name)
+      expect(body[:attributes][:completed_chores].first[:description]).to eq(chore_1.description)
+      expect(body[:attributes][:completed_chores].first[:weight]).to eq(chore_1.weight)
+      expect(body[:attributes][:completed_chores].first[:frequency]).to eq(chore_1.frequency)
+      expect(body[:attributes][:completed_chores].first[:outdoor]).to eq(chore_1.outdoor)
     end
 
     it 'sad path: cannot find the user' do
