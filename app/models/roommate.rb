@@ -10,7 +10,6 @@ class Roommate < ApplicationRecord
   
   def incomplete_chores
     chores.joins(:assignments)
-    .select("chores.* as chores")
-    .where('assignments.completed = true')
+    .where('assignments.completed = false')
   end
 end
