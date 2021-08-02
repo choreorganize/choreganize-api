@@ -43,8 +43,7 @@ RSpec.describe "Roommate API" do
 
       expect(body[:attributes][:household][:id]).to eq(@household.id)
       expect(body[:attributes][:household][:address]).to eq(@household.address)
-      # needs to change to password_digest
-      expect(body[:attributes][:household][:housecode_digest]).to eq(@household.housecode_digest)
+      expect(body[:attributes][:household][:password_digest]).to eq(@household.password_digest)
       expect(body[:attributes][:household][:city]).to eq(@household.city)
       expect(body[:attributes][:household][:state]).to eq(@household.state)
       
