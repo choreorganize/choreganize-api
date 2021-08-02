@@ -27,6 +27,13 @@ RSpec.describe "Household Show page API" do
       expect(body[:data][:attributes]).to_not have_key(:password_digest)
       expect(body[:data][:attributes][:password_digest]).to_not eq(@household.password_digest)
       expect(body[:data][:attributes][:password_digest]).to eq(nil)
+      
+      expect(body[:data][:attributes]).to have_key(:weather_forecast)
+      expect(body[:data][:attributes][:weather_forecast]).to have_key(:current_weather)
+      expect(body[:data][:attributes][:weather_forecast][:current_weather]).to be_a(Hash)
+      expect(body[:data][:attributes][:weather_forecast]).to have_key(:daily_weather)
+      expect(body[:data][:attributes][:weather_forecast][:daily_weather]).to be_a(Array)
+      expect(body[:data][:attributes][:weather_forecast][:daily_weather].count).to eq(5)  
     end
 
     it ' can send info on roommates and ' do

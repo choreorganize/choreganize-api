@@ -17,11 +17,4 @@ class Roommate < ApplicationRecord
     chores.joins(:assignments)
     .where('assignments.completed = true')
   end
-
-  # is this violating a design pattern?
-  # def weather_forecast 
-  #   city = self.household.city
-  #   state = self.household.state
-  #   Forecast.forecast(city, state)
-  # end
 end
