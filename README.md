@@ -133,7 +133,7 @@ See our app in action [here](https://choreganize-api.herokuapp.com/)
 Created by
 
 * Andrew Shaffer [GitHub](https://github.com/Aphilosopher30) • [LinkedIn](https://www.linkedin.com/in/andrew-shafer-0631ab20a/)
-* Emmy Morris [GitHub](https://github.com/EmmyMorris) • [LinkedIn](https://www.linkedin.com/in/meaghanmorris1/)
+* Emmy Morris [GitHub](https://github.com/EmmyMorris) • [LinkedIn](https://www.linkedin.com/in/EmmyMorris/)
 * Kevin Nguyen [GitHub](https://github.com/denverdevelopments) • [LinkedIn](https://www.linkedin.com/in/kevin-nguyen-59510520a/)
 * Suzie Kim [GitHub](https://github.com/suzkiee) • [LinkedIn](https://www.linkedin.com/in/kim-suzie/)
 * Zach Trokey [GitHub](https://github.com/ztrokey) • [LinkedIn](https://www.linkedin.com/in/zach-trokey/)
