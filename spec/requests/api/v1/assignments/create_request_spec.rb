@@ -5,6 +5,7 @@ RSpec.describe "Assignment create API" do
     @household = Household.find(161)
     @chore = Chore.find(240)
     @roommate = Roommate.find(130)
+
   end
 
   context 'happy paths' do

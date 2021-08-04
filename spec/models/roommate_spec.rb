@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe Roommate, type: :model do
   describe 'relationships' do
     it { should belong_to(:household).optional }
-    it { should have_many(:assignments) }
-    it { should have_many(:chores).through(:assignments) }
+    it { should have_many(:assignments), dependent: :destroy }
+    it { should have_many(:chores).through(:assignments) , dependent: :destroy}
   end
 
   describe 'validations' do
@@ -15,7 +15,7 @@ RSpec.describe Roommate, type: :model do
   end
 
   describe 'instance method' do
-    before(:each) do 
+    before(:each) do
       household = create(:mock_household)
       @user = create(:mock_roommate, household: household)
       @chore_1 = create(:mock_chore, household: household)
@@ -26,7 +26,7 @@ RSpec.describe Roommate, type: :model do
     end
 
     describe '#incomplete_chores' do
-      it 'returns list of all incomplete chores' do 
+      it 'returns list of all incomplete chores' do
 
         expect(@user.incomplete_chores).to eq([@chore_2])
         expect(@user.completed_chores).to_not eq([@chore_3])
@@ -34,8 +34,8 @@ RSpec.describe Roommate, type: :model do
     end
 
     describe '#completed_chores' do
-      it 'returns lists of all completed chores' do 
-        
+      it 'returns lists of all completed chores' do
+
         expect(@user.completed_chores).to eq([@chore_1])
         expect(@user.completed_chores).to_not eq([@chore_3])
       end
