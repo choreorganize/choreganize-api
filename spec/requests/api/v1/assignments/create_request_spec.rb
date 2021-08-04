@@ -2,11 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "Assignment create API" do
   before(:all) do
-    Chore.destroy_all
-    Roommate.destroy_all
-    @household = create(:mock_household)
-    @chore = create(:mock_chore, household: @household)
-    @roommate = create(:mock_roommate, household: @household)
+    @household = Household.find(161)
+    @chore = Chore.find(240)
+    @roommate = Roommate.find(130)
   end
 
   context 'happy paths' do
@@ -18,6 +16,7 @@ RSpec.describe "Assignment create API" do
           chore_id: @chore.id
         }
       }
+
       body = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to be_successful
@@ -32,8 +31,9 @@ RSpec.describe "Assignment create API" do
     end
 
     it 'adds something to data base' do
-
+      Assignment.destroy_all
       test = Assignment.find_by(roommate_id: @roommate.id)
+      
       expect(test).to eq(nil)
 
       post '/api/v1/assignments', params: {
@@ -45,7 +45,7 @@ RSpec.describe "Assignment create API" do
       }
 
       test_2 = Assignment.find_by(roommate_id: @roommate.id)
-
+      
       expect(test_2.class).to eq(Assignment)
     end
   end
@@ -62,14 +62,15 @@ RSpec.describe "Assignment create API" do
             }
           }
           body = JSON.parse(response.body, symbolize_names: true)
-
+          
           expect(response.status).to eq(400)
 
-          expect(body[:data]).to have_key(:message)
-          expect(body[:data]).to have_key(:errors)
-          expect(body[:data][:message]).to eq("your query could not be completed")
-          expect(body[:data][:errors]).to eq('cannot create assignment')
+          expect(body).to have_key(:message)
+          expect(body).to have_key(:errors)
+          expect(body[:message]).to eq("Bad Request")
+          expect(body[:errors]).to eq("Cannot create assignment. Roommate must exist, Chore must exist")
         end
+
         it 'does not add anything to the data base' do
 
           test = Assignment.find_by(roommate_id: 0)
@@ -89,6 +90,7 @@ RSpec.describe "Assignment create API" do
         end
       end
     end
+
     describe 'invalid chore' do
       it 'returns errors' do
         post '/api/v1/assignments', params: {
@@ -99,15 +101,17 @@ RSpec.describe "Assignment create API" do
           }
         }
         body = JSON.parse(response.body, symbolize_names: true)
-
+       
         expect(response.status).to eq(400)
 
-        expect(body[:data]).to have_key(:message)
-        expect(body[:data]).to have_key(:errors)
-        expect(body[:data][:message]).to eq("your query could not be completed")
-        expect(body[:data][:errors]).to eq('cannot create assignment')
+        expect(body).to have_key(:message)
+        expect(body).to have_key(:errors)
+        expect(body[:message]).to eq("Bad Request")
+        expect(body[:errors]).to eq("Cannot create assignment. Roommate must exist, Chore must exist")
       end
+
       it 'does not add anything to the data base' do
+        Assignment.destroy_all 
 
         test = Assignment.find_by(roommate_id: @roommate.id)
         expect(test).to eq(nil)

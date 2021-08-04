@@ -3,20 +3,22 @@ class Api::V1::AssignmentsController < ApplicationController
 
   def create
     assignment_params = { 
-      completed: params['completed'],
-      roommate_id: params['roommate_id'],
-      chore_id: params['chore_id']
+      completed: params['assignment']['completed'],
+      roommate_id: params['assignment']['roommate_id'],
+      chore_id: params['assignment']['chore_id']
     }
-
+ 
     assignment = Assignment.create!(assignment_params)
-
+ 
     if assignment.save
       render json: AssignmentSerializer.new(assignment), status: 201
-    else
-      # test = assignment.errors
-      # binding.pry
-      error_response("cannot create assignment", 400)
-    end
+    end 
+
+    rescue ActiveRecord::RecordInvalid
+      render json: {
+        message: 'Bad Request',
+        errors: "Cannot create assignment. Roommate must exist, Chore must exist"
+      }, status: 400
   end
 
   private
