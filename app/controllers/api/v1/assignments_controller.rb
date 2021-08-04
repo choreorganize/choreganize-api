@@ -2,7 +2,13 @@ class Api::V1::AssignmentsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create]
 
   def create
-    assignment = Assignment.new(assignment_params)
+    assignment_params = { 
+      completed: params['completed'],
+      roommate_id: params['roommate_id'],
+      chore_id: params['chore_id']
+    }
+
+    assignment = Assignment.create!(assignment_params)
 
     if assignment.save
       render json: AssignmentSerializer.new(assignment), status: 201
