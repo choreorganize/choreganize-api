@@ -2,6 +2,10 @@ require 'rails_helper'
 
 RSpec.describe "Assignment Update API" do
   before(:all) do
+    Roommate.destroy_all
+    Chore.destroy_all
+    Household.destroy_all
+    Assignment.destroy_all
     @household = create(:mock_household)
     @chore = create(:mock_chore, household: @household)
     @roommate = create(:mock_roommate, household: @household)
