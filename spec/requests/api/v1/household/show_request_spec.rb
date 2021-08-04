@@ -41,7 +41,7 @@ RSpec.describe "Household Show page API" do
       get "/api/v1/household/#{@household.id}"
 
       body = JSON.parse(response.body, symbolize_names: true)
-
+   
       expect(response).to be_successful
 
       expect(body[:data]).to have_key(:id)

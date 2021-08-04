@@ -2,12 +2,23 @@ class Api::V1::AssignmentsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create]
 
   def create
-    assignment = Assignment.new(assignment_params)
+    assignment_params = { 
+      completed: params['assignment']['completed'],
+      roommate_id: params['assignment']['roommate_id'],
+      chore_id: params['assignment']['chore_id']
+    }
+ 
+    assignment = Assignment.create!(assignment_params)
+    require 'pry'; binding.pry
     if assignment.save
       render json: AssignmentSerializer.new(assignment), status: 201
-    else
-      error_response("cannot create assignment", 400)
-    end
+    end 
+
+    rescue ActiveRecord::RecordInvalid
+      render json: {
+        message: 'Bad Request',
+        errors: "Cannot create assignment. Roommate must exist, Chore must exist"
+      }, status: 400
   end
 
   def update
