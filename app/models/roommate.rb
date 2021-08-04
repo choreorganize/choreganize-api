@@ -5,9 +5,10 @@ class Roommate < ApplicationRecord
   validates :token, presence: true
 
   belongs_to :household, optional: true
-  has_many :assignments, dependent: :destroy 
-  has_many :chores, through: :assignments, dependent: :destroy 
-  
+
+  has_many :assignments, dependent: :destroy
+  has_many :chores, through: :assignments, dependent: :destroy
+
   def incomplete_chores
     chores.joins(:assignments)
     .where('assignments.completed = false')

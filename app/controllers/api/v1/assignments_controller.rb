@@ -21,6 +21,20 @@ class Api::V1::AssignmentsController < ApplicationController
       }, status: 400
   end
 
+  def update
+    assignment = Assignment.find(params[:id])
+
+    if assignment.update!(assignment_params)
+      render json: AssignmentSerializer.new(assignment), status: 204
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    render json: {
+      message: 'Not Found',
+      errors: "Could not find assignment with id##{params[:id]}"
+    }, status: 404
+  end
+
   private
     def assignment_params
       params.require(:assignment).permit(:completed, :roommate_id, :chore_id)

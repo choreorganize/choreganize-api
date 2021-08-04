@@ -58,13 +58,82 @@ Run `bundle exec rspec` to run the test suite
 
 ## Deployment
 
-See our app in action [here](<!--heroku link here -->)
+See our app in action [here](https://choreganize-api.herokuapp.com/)
+
+## Choreganize API Endpoints
+
+**ROOMMATES**
+
+- GET /api/v1/roommates
+> Get roommate list
+> Get the list of all roommates in the app
+
+- POST /api/v1/roommates
+> Create a roommate
+> Logging in with google for the first time on the app is required.
+
+**ROOMMATE**
+
+- GET /api/v1/roommates/:id
+> Get a roommate details by id
+> PATH PARAMETERS- :id (integer)- REQUIRED
+
+- PATCH /api/v1/roommates/:id
+> Update a section of a roommates details by id
+> PATH PARAMETERS- :id (integer)- REQUIRED
+
+- PUT /api/v1/roommates/:id
+> Update a roommates details by id
+> PATH PARAMETERS- :id (integer)- REQUIRED
+
+**CHORES**
+
+- GET /api/v1/chores
+> Get chores list
+> Get the list of all chores in the app
+
+- POST /api/v1/chores
+> Create a chore
+> A valid session is required.
+
+**CHORE**
+
+- GET /api/v1/chores/:id
+> Get a chore details by id
+> PATH PARAMETERS- :id (integer)- REQUIRED
+
+- PATCH /api/v1/chores/:id
+> Update a section of a chores details by id
+> PATH PARAMETERS- :id (integer)- REQUIRED
+
+- PUT /api/v1/chores/:id
+> Update a chores details by id
+> PATH PARAMETERS- :id (integer)- REQUIRED
+
+- DELETE /api/v1/chores/:id
+> Remove a chore from a household
+> PATH PARAMETERS- :id (integer)- REQUIRED
+> A valid session is required.
+
+**HOUSEHOLD**
+- GET /api/v1/household/search
+> Search a household by ...
+
+- GET /api/v1/household/:id
+> Get a household details by id
+> PATH PARAMETERS- :id (integer)- REQUIRED
+
+**ASSIGNMENTS**
+- POST /api/v1/assignments 
+> Create a new assignment   
+> A valid session is required
+> PARAMS: :roommate_id, :chore_id
 
 ## Contact
 Created by
 
 * Andrew Shaffer [GitHub](https://github.com/Aphilosopher30) • [LinkedIn](https://www.linkedin.com/in/andrew-shafer-0631ab20a/)
-* Emmy Morris [GitHub](https://github.com/EmmyMorris) • [LinkedIn](https://www.linkedin.com/in/meaghanmorris1/)
+* Emmy Morris [GitHub](https://github.com/EmmyMorris) • [LinkedIn](https://www.linkedin.com/in/EmmyMorris/)
 * Kevin Nguyen [GitHub](https://github.com/denverdevelopments) • [LinkedIn](https://www.linkedin.com/in/kevin-nguyen-59510520a/)
 * Suzie Kim [GitHub](https://github.com/suzkiee) • [LinkedIn](https://www.linkedin.com/in/kim-suzie/)
 * Zach Trokey [GitHub](https://github.com/ztrokey) • [LinkedIn](https://www.linkedin.com/in/zach-trokey/)

@@ -5,6 +5,7 @@ class Chore < ApplicationRecord
   enum frequency: {weekly: 1, bimonthly: 2, monthly: 3} 
 
   belongs_to :household
-  has_many :assignments, dependent: :destroy 
-  has_many :roommates, through: :assignments, dependent: :destroy 
+
+  has_many :assignments, dependent: :destroy
+  has_many :roommates, through: :assignments, dependent: :destroy
 end
