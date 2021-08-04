@@ -1,36 +1,51 @@
-# require 'rails_helper'
+require 'rails_helper'
 
-# RSpec.describe "Assignment create API" do
-#   before(:all) do
-#     @household = Household.find(161)
-#     @chore = Chore.find(240)
-#     @roommate = Roommate.find(130)
+RSpec.describe "Assignment create API" do
+  # before(:all) do
+  #   # @household = Household.find(161)
+  #   # @chore = Chore.find(240)
+  #   # @roommate = Roommate.find(130)
+  #   @household = Household.create!()
+  # end
 
-#   end
+  context 'happy paths' do
+    it 'returns assignment information' do
+      household = Household.create!(address: Faker::Address.street_address, city: 'denver', state: 'co', password_digest: Faker::Internet.password)
+      chore = 
+      chore1 = Chore.create!({
+            id: 1,
+            task_name: 'Mow',
+            household_id: household.id,
+            description: 'Cut some grass, my friend.',
+            weight: 1,
+            frequency: 'weekly',
+            outdoor: true
+          })
+     
+      roommate = Roommate.create!(id: 2, name: Faker::FunnyName.name, email: Faker::Internet.email, google_id: Faker::Internet.password, token: Faker::Internet.password, household: household)
+     
+      post '/api/v1/assignments', params: {
+        assignment: {
+          completed: false,
+          roommate_id: roommate.id,
+          chore_id: chore.id
+        }
+      }
 
-#   context 'happy paths' do
-#     xit 'returns assignment information' do
-#       post '/api/v1/assignments', params: {
-#         assignment: {
-#           completed: false,
-#           roommate_id: @roommate.id,
-#           chore_id: @chore.id
-#         }
-#       }
+      body = JSON.parse(response.body, symbolize_names: true)
+     
+      expect(response).to be_successful
+      expect(body[:data]).to have_key(:id)
+      expect(body[:data]).to have_key(:type)
+      expect(body[:data][:type]).to eq('assignment')
 
-#       body = JSON.parse(response.body, symbolize_names: true)
-
-#       expect(response).to be_successful
-#       expect(body[:data]).to have_key(:id)
-#       expect(body[:data]).to have_key(:type)
-#       expect(body[:data][:type]).to eq('assignment')
-
-#       expect(body[:data]).to have_key(:attributes)
-#       expect(body[:data][:attributes][:completed]).to eq(false)
-#       expect(body[:data][:attributes][:roommate_id]).to eq(@roommate.id)
-#       expect(body[:data][:attributes][:chore_id]).to eq(@chore.id)
-#     end
-
+      expect(body[:data]).to have_key(:attributes)
+      expect(body[:data][:attributes][:completed]).to eq(false)
+      expect(body[:data][:attributes][:roommate_id]).to eq(roommate.id)
+      expect(body[:data][:attributes][:chore_id]).to eq(chore.id)
+    end
+  end
+end
 #     xit 'adds something to data base' do
 #       Assignment.destroy_all
 #       test = Assignment.find_by(roommate_id: @roommate.id)
