@@ -8,30 +8,32 @@
 Household.destroy_all
 Roommate.destroy_all
 Chore.destroy_all
+Assignment.destroy_all 
 
 20.times do
   Household.create do |household|
     household.address = Faker::Address.street_address
     household.city = "denver"
     household.state = "co"
-    household.housecode_digest = Faker::Internet.password
-    3.times do
-      household.roommates.new do |roommate|
-        roommate.name = Faker::FunnyName.name
-        roommate.email = Faker::Internet.email
-        roommate.google_id = Faker::Internet.password
-        roommate.token = Faker::Internet.password
-      end
-    end
-    9.times do
-      household.chores.new do |chore|
-        # chore.task_name = Faker::Hobby.activity 
-        chore.task_name = Faker::Lorem.word
-        chore.description = Faker::Hipster.paragraph
-        chore.weight = [1,2,3].sample
-        chore.frequency = [1,2,3].sample
-        chore.outdoor = [true,false].sample
-      end
-    end
+    household.password_digest = Faker::Internet.password
   end
 end
+
+ chore_1 = Chore.create!(task_name: Faker::Lorem.word, description: Faker::Hipster.paragraph, weight: [1,2,3].sample, frequency: [1,2,3].sample, outdoor: true, household: Household.all.first)
+ chore_2 = Chore.create!(task_name: Faker::Lorem.word, description: Faker::Hipster.paragraph, weight: [1,2,3].sample, frequency: [1,2,3].sample, outdoor: true, household: Household.all.first)
+ chore_3 = Chore.create!(task_name: Faker::Lorem.word, description: Faker::Hipster.paragraph, weight: [1,2,3].sample, frequency: [1,2,3].sample, outdoor: true, household: Household.all.first)
+ chore_4 = Chore.create!(task_name: Faker::Lorem.word, description: Faker::Hipster.paragraph, weight: [1,2,3].sample, frequency: [1,2,3].sample, outdoor: true, household: Household.all.first)
+ chore_5 = Chore.create!(task_name: Faker::Lorem.word, description: Faker::Hipster.paragraph, weight: [1,2,3].sample, frequency: [1,2,3].sample, outdoor: true, household: Household.all.first)
+ chore_6 = Chore.create!(task_name: Faker::Lorem.word, description: Faker::Hipster.paragraph, weight: [1,2,3].sample, frequency: [1,2,3].sample, outdoor: true, household: Household.all.first)
+
+ roommate_1 = Roommate.create!(name: Faker::FunnyName.name, email: Faker::Internet.email, google_id: Faker::Internet.password, token: Faker::Internet.password, household: Household.all.first)
+ roommate_2 = Roommate.create!(name: Faker::FunnyName.name, email: Faker::Internet.email, google_id: Faker::Internet.password, token: Faker::Internet.password, household: Household.all.first)
+ roommate_3 = Roommate.create!(name: Faker::FunnyName.name, email: Faker::Internet.email, google_id: Faker::Internet.password, token: Faker::Internet.password, household: Household.all.first)
+
+  Assignment.create!(completed: true, chore: chore_1, roommate: roommate_1)
+  Assignment.create!(completed: false, chore: chore_2, roommate: roommate_1)
+  Assignment.create!(completed: true, chore: chore_3, roommate: roommate_2)
+  Assignment.create!(completed: false, chore: chore_4, roommate: roommate_2)
+  Assignment.create!(completed: true, chore: chore_5, roommate: roommate_3)
+  Assignment.create!(completed: false, chore: chore_6, roommate: roommate_3)
+
