@@ -8,7 +8,7 @@ RSpec.describe "Assignment create API" do
   end
 
   context 'happy paths' do
-    it 'returns assignment information' do
+    xit 'returns assignment information' do
       post '/api/v1/assignments', params: {
         assignment: {
           completed: false,
@@ -30,7 +30,7 @@ RSpec.describe "Assignment create API" do
       expect(body[:data][:attributes][:chore_id]).to eq(@chore.id)
     end
 
-    it 'adds something to data base' do
+    xit 'adds something to data base' do
       Assignment.destroy_all
       test = Assignment.find_by(roommate_id: @roommate.id)
       
@@ -53,7 +53,7 @@ RSpec.describe "Assignment create API" do
   context 'sad paths' do
     describe 'invalid roommate' do
       describe 'No existing roommate' do
-        it 'returns errors' do
+        xit 'returns errors' do
           post '/api/v1/assignments', params: {
             assignment: {
               completed: false,
@@ -71,7 +71,7 @@ RSpec.describe "Assignment create API" do
           expect(body[:errors]).to eq("Cannot create assignment. Roommate must exist, Chore must exist")
         end
 
-        it 'does not add anything to the data base' do
+        xit 'does not add anything to the data base' do
 
           test = Assignment.find_by(roommate_id: 0)
           expect(test).to eq(nil)
@@ -92,7 +92,7 @@ RSpec.describe "Assignment create API" do
     end
 
     describe 'invalid chore' do
-      it 'returns errors' do
+      xit 'returns errors' do
         post '/api/v1/assignments', params: {
           assignment: {
             completed: false,
@@ -110,7 +110,7 @@ RSpec.describe "Assignment create API" do
         expect(body[:errors]).to eq("Cannot create assignment. Roommate must exist, Chore must exist")
       end
 
-      it 'does not add anything to the data base' do
+      xit 'does not add anything to the data base' do
         Assignment.destroy_all 
 
         test = Assignment.find_by(roommate_id: @roommate.id)
@@ -131,3 +131,4 @@ RSpec.describe "Assignment create API" do
     end
   end
 end
+ 

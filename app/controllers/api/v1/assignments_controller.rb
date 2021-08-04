@@ -9,7 +9,7 @@ class Api::V1::AssignmentsController < ApplicationController
     }
  
     assignment = Assignment.create!(assignment_params)
- 
+    require 'pry'; binding.pry
     if assignment.save
       render json: AssignmentSerializer.new(assignment), status: 201
     end 
