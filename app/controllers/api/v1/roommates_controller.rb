@@ -6,15 +6,27 @@ class Api::V1::RoommatesController < ApplicationController
     render json: RoommateSerializer.new(roommates)
   end
 
-  def search
-    user = Roommate.find(params[:google_id])
-    render json: RoommateSerializer.new(user), status: 200
+  # def search
+  #   require 'pry'; binding.pry
+  #   user = Roommate.search(params[:google_id])
+  #   render json: RoommateSerializer.new(user), status: 200
 
-    rescue ActiveRecord::RecordNotFound
-      render json: {
-        message: 'Not Found',
-        errors: ["Could not find user with google_id of #{params[:google_id]}"]
-      }, status: 404
+  #   rescue ActiveRecord::RecordNotFound
+  #     render json: {
+  #       message: 'Not Found',
+  #       errors: ["Could not find user with google_id of #{params[:google_id]}"]
+  #     }, status: 404
+  # end
+
+  def search
+    user = Roommate.find_by(google_id: params[:google_id])
+
+    if user.nil?
+      error_response("User Not Found")
+    else 
+      render json: RoommateSerializer.new(user), status: 200
+    end
+
   end
 
   def show

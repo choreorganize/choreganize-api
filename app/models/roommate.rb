@@ -18,4 +18,8 @@ class Roommate < ApplicationRecord
     chores.joins(:assignments)
     .where('assignments.completed = true')
   end
+
+  def self.search(google_id)
+    where("google_id = ?", "%#{google_id}%")
+  end
 end
