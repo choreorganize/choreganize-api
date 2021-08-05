@@ -1,5 +1,5 @@
 class Api::V1::RoommatesController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:create]
+  skip_before_action :verify_authenticity_token, only: [:create, :update]
 
   def index
     roommates = Roommate.all
