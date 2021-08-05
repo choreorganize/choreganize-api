@@ -4,7 +4,7 @@ RSpec.describe Chore, type: :model do
   describe 'relationships' do
     it { should belong_to(:household) }
     it { should have_many(:assignments) }
-    it { should have_many(:roommates).through(:assignments) }
+    it { should have_many(:roommates).through(:assignments), dependent: :destroy }
   end
 
   describe 'validations' do

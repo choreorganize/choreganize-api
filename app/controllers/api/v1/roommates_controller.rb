@@ -3,12 +3,12 @@ class Api::V1::RoommatesController < ApplicationController
 
   def index
     roommates = Roommate.all
-    render json: RoommatesSerializer.new(roommates)
+    render json: RoommateSerializer.new(roommates)
   end
 
   def show
     user = Roommate.find(params[:id])
-    render json: RoommatesSerializer.new(user), status: 200
+    render json: RoommateSerializer.new(user), status: 200
 
   rescue ActiveRecord::RecordNotFound
     render json: {
@@ -20,7 +20,7 @@ class Api::V1::RoommatesController < ApplicationController
   def create
     roommate = Roommate.new(roommate_params)
     if roommate.save
-      render json: RoommatesSerializer.new(roommate), status: 201
+      render json: RoommateSerializer.new(roommate), status: 201
     else
       render json: roommate.errors, status: 422
     end
@@ -38,7 +38,7 @@ class Api::V1::RoommatesController < ApplicationController
     roommate = Roommate.find(params[:id])
 
     if roommate.update(roommate_params)
-      render json: RoommatesSerializer.new(roommate), status: 204
+      render json: RoommateSerializer.new(roommate), status: 204
     end
 
   rescue ActiveRecord::RecordNotFound

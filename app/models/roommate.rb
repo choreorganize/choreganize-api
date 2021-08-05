@@ -5,9 +5,10 @@ class Roommate < ApplicationRecord
   validates :token, presence: true
 
   belongs_to :household, optional: true
-  has_many :assignments
-  has_many :chores, through: :assignments
-  
+
+  has_many :assignments, dependent: :destroy
+  has_many :chores, through: :assignments, dependent: :destroy
+
   def incomplete_chores
     chores.joins(:assignments)
     .where('assignments.completed = false')
@@ -17,11 +18,4 @@ class Roommate < ApplicationRecord
     chores.joins(:assignments)
     .where('assignments.completed = true')
   end
-
-  # is this violating a design pattern?
-  # def weather_forecast 
-  #   city = self.household.city
-  #   state = self.household.state
-  #   Forecast.forecast(city, state)
-  # end
 end

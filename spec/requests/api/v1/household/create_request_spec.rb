@@ -288,16 +288,7 @@ RSpec.describe "Household create  API" do
 
           expect(test_2.class).to eq(NilClass)
         end
-
-
       end
-
-
-
-
-
     end
   end
-
-
 end
