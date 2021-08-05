@@ -26,7 +26,7 @@ class Api::V1::HouseholdController < ApplicationController
   end
 
   def create
-  household = Household.new(household_params)
+    household = Household.new(household_params)
 
   if household.save
     render json: HouseholdSerializer.new(household), status: 201
