@@ -38,7 +38,7 @@ class Api::V1::RoommatesController < ApplicationController
     roommate = Roommate.find(params[:id])
 
     if roommate.update(roommate_params)
-      render json: RoommateSerializer.new(roommate), status: 204
+      render json: RoommateSerializer.new(roommate), status: 202
     end
 
   rescue ActiveRecord::RecordNotFound
