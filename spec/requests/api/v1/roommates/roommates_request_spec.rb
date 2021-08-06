@@ -19,7 +19,7 @@ RSpec.describe "Roommate API" do
   end
 
   context 'Roommate show' do
-    it 'happy path: can find a single roommate by user id' do
+    xit 'happy path: can find a single roommate by user id' do
       create_list(:mock_roommate, 3, household: @household)
       user = Roommate.first
       chore_1 = create(:mock_chore, household: @household)
